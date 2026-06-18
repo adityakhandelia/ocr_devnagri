@@ -398,6 +398,19 @@ pip install -e .
 python -m src.app
 ```
 
+### GitHub Pages Deployment
+
+The React frontend is deployed to GitHub Pages via GitHub Actions:
+
+- Workflow: `.github/workflows/deploy.yml`
+- Vite base path: `/ocr_devnagri/` in `frontend/vite.config.ts`
+- Package homepage: `https://adityakhandelia.github.io/ocr_devnagri` in `frontend/package.json`
+
+To deploy:
+1. Push to the `main` branch
+2. Ensure **Settings → Pages → Build and deployment** is set to **GitHub Actions**
+3. The workflow builds `frontend/dist/` and publishes it
+
 ### Production Considerations
 - Use WSGI server (e.g., Gunicorn) instead of Flask dev server
 - Implement database backups
@@ -407,4 +420,4 @@ python -m src.app
 
 ---
 
-*Last Updated: 2025-06-10*
+*Last Updated: 2025-06-18*

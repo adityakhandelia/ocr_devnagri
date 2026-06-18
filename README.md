@@ -1,167 +1,228 @@
-# Devanagari OCR & Annotation Platform
+# Devanagari Legislative Debates Archive
 
-A robust, local web-based correction and metrics platform for Devanagari text digitization using Gemini via OpenRouter for first-draft OCR, real-time transliteration support, and WER/CER tracking.
+A complete pipeline to digitize historical Devanagari (Hindi) parliamentary documents and publish them as a searchable, readable web archive.
+
+**Live demo**: https://adityakhandelia.github.io/ocr_devnagri
 
 > 📋 **For development agents:** See [`AGENTS.md`](AGENTS.md) for coding constraints, execution logs, and module implementation status.
 
+## What it does
+
+1. **Ingest** — Converts PDF pages to 300 DPI PNG images.
+2. **OCR** — Extracts Devanagari text using Google Gemini Flash via OpenRouter.
+3. **Parse** — Structures raw OCR into speaker-attributed debate transcripts.
+4. **Track** — Persists progress, paths, tokens, and cost in SQLite.
+5. **Publish** — Serves a React + Tailwind web UI on GitHub Pages.
+
 ## Features
 
-- **High-precision OCR**: Uses Google Gemini 1.5 Flash for accurate Devanagari text extraction
-- **Real-time Transliteration**: Phonetic English-to-Devanagari typing with Google IME API
-- **Metrics Tracking**: Automatic WER (Word Error Rate) and CER (Character Error Rate) calculation
-- **SQLite Database**: Transactional storage for ground truth data and annotation progress
-- **Web Interface**: Flask-based web UI for efficient text correction
+- 📄 **PDF to images** at 300 DPI via PyMuPDF
+- 🤖 **Devanagari OCR** via OpenRouter (`~google/gemini-flash-latest`)
+- 🗣️ **Speaker parsing** for parliamentary transcripts
+- 📊 **Pipeline tracking** in SQLite (`data/pipeline.db`)
+- 💰 **Token usage & cost** tracking
+- 📈 **WER/CER metrics** using jiwer
+- 🌐 **React frontend** with Hansard-style dashboard UI
+- 🚀 **One-click GitHub Pages deployment** via GitHub Actions
+
+## Project Structure
+
+```
+ocr_devnagri/
+├── .github/workflows/deploy.yml   # GitHub Pages deployment
+├── frontend/                       # React + Vite + Tailwind web UI
+│   ├── src/
+│   │   ├── App.tsx
+│   │   ├── components/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── TopBar.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── StatsCards.tsx
+│   │   │   ├── PageNavigation.tsx
+│   │   │   └── SpeechView.tsx
+│   │   └── hooks/useDebateData.ts
+│   ├── public/data/debates.json   # Structured debate data
+│   └── package.json
+├── scripts/
+│   ├── full_pdf_pipeline.py       # Full pipeline: PDF → images → OCR → JSON
+│   ├── parse_debates.py           # OCR text → structured JSON
+│   ├── generate_frontend_json.py  # JSON generation without OCR
+│   ├── init_tracker.py            # Initialize SQLite tracker
+│   └── check_tracker.py           # Check pipeline progress
+├── src/
+│   ├── app.py                     # Flask annotation UI (legacy)
+│   ├── database/
+│   │   ├── schema.py              # Annotation database schema
+│   │   └── pipeline_tracker.py    # Pipeline tracking SQLite layer
+│   └── utils/
+│       ├── pdf_converter.py       # PDF → image conversion
+│       ├── ocr_engine.py          # OpenRouter Gemini wrapper
+│       ├── transliteration.py     # Google IME transliteration
+│       └── metrics.py             # WER/CER calculation
+├── data/
+│   ├── full_pdf_images/           # Generated page images
+│   ├── full_pdf_ocr/              # Generated OCR text
+│   └── pipeline.db                # Pipeline SQLite database
+├── ceDscX/                        # Source PDFs (not tracked in git)
+├── pyproject.toml                 # Python dependencies
+└── README.md
+```
 
 ## Installation
 
 ### Prerequisites
 
 - Python 3.10+
-- [uv](https://docs.astral.sh/uv/getting-started/) (fast Python package installer)
-- OpenRouter API key (get it from [OpenRouter](https://openrouter.ai/keys))
+- [uv](https://docs.astral.sh/uv/) package manager
+- Node.js 20+ (for frontend)
+- OpenRouter API key
 
-### Setup
+### 1. Clone and setup Python environment
 
-1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd ocr-devnagri
-```
-
-2. Install dependencies with uv (this reads pyproject.toml and installs everything):
-```bash
+git clone https://github.com/adityakhandelia/ocr_devnagri.git
+cd ocr_devnagri
 uv sync
 ```
 
-3. Configure your OpenRouter API key:
-```bash
-# Copy the example environment file
-cp .env.example .env
+### 2. Configure OpenRouter API key
 
-# Edit .env and add your OpenRouter API key
+```bash
+cp .env.example .env
+# Edit .env and add:
 # OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
-> **Note:** This project uses OpenRouter as a unified API gateway to access Gemini models. OpenRouter provides a single API key that works with multiple providers (Google, OpenAI, Anthropic, etc.).
+### 3. Install frontend dependencies
+
+```bash
+cd frontend
+npm install
+cd ..
+```
 
 ## Usage
 
-### 1. Initialize Dataset from PDFs
+### Full pipeline (PDF → images → OCR → JSON)
 
-Place your PDF files in a directory (e.g., `ceDscX/` or `data/raw/`), then initialize the dataset:
-
-```bash
-# Auto-detect PDF directory (checks ceDscX/, then data/raw/)
-uv run python init_dataset.py
-
-# Or specify a custom directory
-uv run python init_dataset.py path/to/pdf/folder
-
-# With OCR generation (requires Gemini API key in .env)
-uv run python init_dataset.py --with-ocr
-uv run python init_dataset.py ceDscX/ --with-ocr
-```
-
-**What this does:**
-- Converts each PDF page to 300 DPI PNG images in `data/images/`
-- Creates database records for each page in `data/annotations.db`
-- (Optionally) Generates OCR drafts using Gemini 1.5 Flash API
-
-### 2. Run the Application
+Place your PDF in `ceDscX/` (or update `PDF_PATH` in `scripts/full_pdf_pipeline.py`), then run:
 
 ```bash
-uv run python -m src.app
+uv run python scripts/full_pdf_pipeline.py
 ```
 
-The web interface will be available at **`http://localhost:5000`** (or next available port 5000-5009)
+This will:
+1. Convert the PDF to images in `data/full_pdf_images/<pdf_name>/`
+2. Run OCR on each page and save text to `data/full_pdf_ocr/<pdf_name>/`
+3. Update `data/pipeline.db` with status, tokens, and cost
+4. Generate `frontend/public/data/debates.json`
 
-You should now see images loaded in the UI for annotation.
+### Generate frontend JSON only (no API calls)
 
-### 3. Workflow
+If you already have OCR text files:
 
-1. **Prepare**: Place PDFs in any directory
-2. **Initialize**: Run `init_dataset.py` to convert and load into database
-3. **View**: Open the web UI to see images and OCR drafts
-4. **Correct**: Edit the OCR text to create ground truth annotations
-5. **Track**: Metrics (WER/CER) are automatically calculated and saved
-
-### 4. Batch Processing
-
-For custom batch processing:
-
-```python
-from src.utils.pdf_converter import convert_pdf_to_images
-from src.utils.ocr_engine import get_gemini_ocr
-from src.database.schema import init_db, insert_page, save_ocr_draft
-
-# Initialize database
-init_db()
-
-# Process PDFs
-pdf_path = "ceDscX/1952_1_100_2.pdf"
-image_paths = convert_pdf_to_images(pdf_path, "data/images/")
-
-# Extract OCR for each page
-for i, img_path in enumerate(image_paths):
-    page_id = f"doc_page_{i+1}"
-    insert_page(db_path, page_id, pdf_path, i+1, img_path)
-    
-    ocr_text = get_gemini_ocr(img_path, api_key)
-    save_ocr_draft(db_path, page_id, ocr_text)
+```bash
+uv run python scripts/generate_frontend_json.py
 ```
+
+### Check pipeline progress
+
+```bash
+uv run python scripts/check_tracker.py
+```
+
+## Frontend Development
+
+```bash
+cd frontend
+npm run dev
+```
+
+Open http://localhost:5173
+
+### Build for production
+
+```bash
+npm run build
+```
+
+Output is in `frontend/dist/`.
+
+## Deployment to GitHub Pages
+
+Deployment is handled automatically by GitHub Actions (`.github/workflows/deploy.yml`).
+
+### Steps
+
+1. Push the repo to GitHub.
+2. Go to **Settings → Pages** in your GitHub repo.
+3. Under **Build and deployment**, select **GitHub Actions**.
+4. Every push to `main` will build and deploy the frontend.
+
+The live site will be at:
+
+```
+https://adityakhandelia.github.io/ocr_devnagri
+```
+
+> The `base` path in `frontend/vite.config.ts` and the `homepage` field in `frontend/package.json` are already configured for the repo name `ocr_devnagri`. If you rename the repo, update both values.
+
+## Cost Estimation
+
+OpenRouter charges approximately **$9 per 1M tokens** for Gemini Flash.
+
+- Average cost per page: ~$0.04
+- A typical 88-page volume: ~$3.50–$4.00
+
+Actual cost is tracked in `data/pipeline.db` after each OCR run.
+
+## Pipeline Database Schema
+
+The SQLite database (`data/pipeline.db`) tracks:
+
+| Column | Description |
+|--------|-------------|
+| `pdf_name` | Source PDF filename |
+| `pdf_path` | Path to source PDF |
+| `page_number` | Page index |
+| `image_path` | Path to generated PNG |
+| `ocr_text_path` | Path to OCR text file |
+| `ocr_status` | pending / processing / done / failed |
+| `prompt_tokens` | Input tokens used |
+| `completion_tokens` | Output tokens used |
+| `total_tokens` | Total tokens used |
+| `estimated_cost` | Estimated API cost in USD |
 
 ## Troubleshooting
 
 ### 402 Error: Insufficient Credits
 
-If you see an error like:
-```
-OpenRouter API error: 402 - This request requires more credits
-```
+Your OpenRouter account needs more credits. Add credits at https://openrouter.ai/credits.
 
-This means your OpenRouter API key doesn't have enough credits for the request. The code now limits `max_tokens` to 4096 to minimize credit usage. Solutions:
-1. Add credits to your OpenRouter account at https://openrouter.ai/credits
-2. Use the free tier model (already set as default: `google/gemini-2.0-flash-exp:free`)
-3. Reduce image size before processing
+### 408 Error while pushing to GitHub
 
-## Project Structure
+The repo contains large generated files (PDFs, images). Make sure these are in `.gitignore`:
 
-```
-ocr_devnagri/
-├── AGENTS.md                   # Agent execution log & constraints
-├── src/
-│   ├── app.py                  # Main Flask web UI
-│   ├── database/
-│   │   └── schema.py           # SQLite database management
-│   └── utils/
-│       ├── pdf_converter.py    # PDF to image conversion
-│       ├── ocr_engine.py       # OpenRouter Gemini API wrapper
-│       ├── transliteration.py  # Google IME API
-│       └── metrics.py          # WER/CER calculation
-├── tests/                      # Unit tests
-├── docs/                       # Documentation
-│   ├── OCR_SPEC.md             # OCR pipeline specifications
-│   ├── DATASET.md              # Dataset structure and guidelines
-│   └── MODEL.md                # Model evaluation and benchmarks
-├── data/                       # Data storage
-│   ├── images/                 # Converted PNG images
-│   └── raw/                    # Source PDFs
-└── pyproject.toml              # Project configuration
+```gitignore
+ceDscX/
+*.pdf
+data/full_pdf_images/
+data/full_pdf_ocr/
+data/sampled_images/
+data/ground_truth_texts/
+data/pipeline.db
+frontend/node_modules/
+frontend/dist/
 ```
 
-## Database Schema
+If already committed, remove them from history:
 
-The SQLite database (`data/annotations.db`) stores:
-
-- `page_id`: Unique identifier for each page
-- `pdf_source`: Source PDF file path
-- `page_number`: Page number within PDF
-- `image_path`: Path to high-res PNG
-- `ocr_draft`: Initial OCR output from Gemini
-- `ground_truth`: Human-corrected text
-- `status`: Annotation status (pending/completed/flagged)
-- `wer`/`cer`: Error rates
-- `annotation_time_sec`: Time spent annotating
+```bash
+git rm -r --cached data/full_pdf_images data/full_pdf_ocr ceDscX
+rm -rf frontend/.git
+git commit --amend -m "Initial commit"
+git push -u origin main --force
+```
 
 ## Contributing
 
@@ -173,10 +234,12 @@ The SQLite database (`data/annotations.db`) stores:
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License
 
 ## Acknowledgments
 
-- Google Gemini API for multimodal OCR capabilities
-- Google Input Tools for transliteration support
-- Gradio team for the excellent web interface framework
+- Google Gemini for multimodal OCR
+- OpenRouter for API gateway access
+- Google Input Tools for transliteration
+- PyMuPDF for PDF conversion
+- Tailwind CSS and Vite for the frontend
