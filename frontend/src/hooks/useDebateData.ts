@@ -5,7 +5,7 @@ export function useDebateData() {
   const [data, setData] = useState<DebateData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+// test
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/debates.json`)
       .then((res) => {
