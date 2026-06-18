@@ -7,7 +7,7 @@ export function useDebateData() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/data/debates.json')
+    fetch(`${import.meta.env.BASE_URL}data/debates.json`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to load debate data');
