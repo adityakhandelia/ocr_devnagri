@@ -1,0 +1,35 @@
+{
+  "pages": [
+    {
+      "image_name": "1952_1_102_6_page_030.png",
+      "wer": 0.0512,
+      "cer": 0.0444,
+      "word_accuracy": 0.9488,
+      "char_accuracy": 0.9556,
+      "ref_word_count": 664,
+      "hyp_word_count": 691,
+      "ref_char_count": 3355,
+      "hyp_char_count": 3500,
+      "timestamp": "2026-06-11T18:01:44.853637"
+    },
+    {
+      "image_name": "1952_1_102_6_page_031.png",
+      "wer": 0.0101,
+      "cer": 0.002,
+      "word_accuracy": 0.9899,
+      "char_accuracy": 0.998,
+      "ref_word_count": 496,
+      "hyp_word_count": 496,
+      "ref_char_count": 2548,
+      "hyp_char_count": 2546,
+      "timestamp": "2026-06-11T19:00:55.057417"
+    }
+  ],
+  "cumulative": {
+    "total_pages": 2,
+    "avg_wer": 0.0307,
+    "avg_cer": 0.0232,
+    "avg_word_accuracy": 0.9693,
+    "avg_char_accuracy": 0.9768
+  }
+}

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devanagari OCR Annotation</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #e8e0d5;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C8B7E' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Decorative background image */
+        .bg-decoration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 1200px;
+            height: auto;
+            opacity: 0.03;
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            color: #2c1810;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #6b5b4e;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        
+        /* Header stats bar */
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .header-stat {
+            background: #f8f5f2;
+            border: 1px solid #e0d5cc;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #5a4a3d;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .header-stat .number {
+            font-weight: bold;
+            color: #2c1810;
+            font-size: 15px;
+        }
+        
+        .progress-bar {
+            background: #e8e0d5;
+            border-radius: 10px;
+            height: 24px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid #d5c8bb;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #7B9E6B, #8FB87E);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .section {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section h2 {
+            font-size: 17px;
+            color: #2c1810;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #8B6914;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .image-selector {
+            margin-bottom: 15px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 2px solid #d5c8bb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            color: #2c1810;
+        }
+        
+        select:focus {
+            border-color: #8B6914;
+            outline: none;
+        }
+        
+        .image-container {
+            background: #f8f5f2;
+            border: 2px solid #e0d5cc;
+            border-radius: 6px;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 700px;
+            border-radius: 4px;
+        }
+        
+        .image-placeholder {
+            color: #9c8b7e;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d5c8bb;
+            border-radius: 4px;
+            font-family: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            background: white;
+            color: #2c1810;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d5c8bb;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+            color: #2c1810;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #8B6914;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6B4F0A;
+        }
+        
+        .btn-success {
+            background: #5B8A4E;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #4A7240;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .message.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        
+        /* Token info panel */
+        .token-info {
+            background: #fff8e6;
+            border: 1px solid #f0e0c0;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .token-info.show {
+            display: block;
+        }
+        
+        /* Stats panels */
+        .panel {
+            background: #f8f5f2;
+            border: 1px solid #e0d5cc;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .panel h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #2c1810;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 13px;
+            color: #5a4a3d;
+            border-bottom: 1px solid #e8e0d5;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-row .value {
+            font-weight: 600;
+            color: #2c1810;
+        }
+        
+        /* Metrics display */
+        .metrics-panel {
+            background: #f0f7f0;
+            border: 1px solid #c8e0c8;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .metrics-panel.show {
+            display: block;
+        }
+        
+        .metrics-panel h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #2c1810;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .metric-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .metric-good {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .metric-warn {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .metric-bad {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .completed-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 12px;
+        }
+        
+        .completed-item {
+            padding: 3px 0;
+            color: #28a745;
+        }
+        
+        .usage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .usage-item {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #e0d5cc;
+            text-align: center;
+        }
+        
+        .usage-item .label {
+            font-size: 11px;
+            color: #9c8b7e;
+            margin-bottom: 2px;
+        }
+        
+        .usage-item .value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c1810;
+        }
+        
+        .usage-item .sub {
+            font-size: 10px;
+            color: #9c8b7e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative background element -->
+    <svg class="bg-decoration" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+        <path d="M400 50 Q300 150 350 250 Q400 350 300 450 Q200 550 400 550 Q600 550 500 450 Q400 350 450 250 Q500 150 400 50" fill="none" stroke="#8B6914" stroke-width="2"/>
+        <path d="M400 80 Q320 160 360 240 Q400 320 320 400 Q240 480 400 480 Q560 480 480 400 Q400 320 440 240 Q480 160 400 80" fill="none" stroke="#8B6914" stroke-width="1.5" opacity="0.6"/>
+        <circle cx="400" cy="300" r="180" fill="none" stroke="#8B6914" stroke-width="1" opacity="0.3" stroke-dasharray="10,5"/>
+        <text x="400" y="310" text-anchor="middle" font-size="60" fill="#8B6914" opacity="0.15" font-family="serif">देव</text>
+    </svg>
+
+    <div class="container">
+        <h1>📝 Devanagari OCR Annotation</h1>
+        <p class="subtitle">Select an image, generate OCR, correct the text, and save ground truth</p>
+        
+        <!-- Header completion stats -->
+        <div class="header-stats">
+            <div class="header-stat">
+                <span>📊 Total:</span>
+                <span class="number" id="headerTotal">0</span>
+            </div>
+            <div class="header-stat">
+                <span>✅ Completed:</span>
+                <span class="number" id="headerCompleted">0</span>
+            </div>
+            <div class="header-stat">
+                <span>🔄 Remaining:</span>
+                <span class="number" id="headerRemaining">0</span>
+            </div>
+            <div class="header-stat">
+                <span>💰 Cost:</span>
+                <span class="number" id="headerCost">$0.00</span>
+            </div>
+            <div class="header-stat">
+                <span>📈 Avg WER:</span>
+                <span class="number" id="headerAvgWER">0.00%</span>
+            </div>
+            <div class="header-stat">
+                <span>📈 Avg CER:</span>
+                <span class="number" id="headerAvgCER">0.00%</span>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%">0% Complete</div>
+        </div>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="content">
+            <!-- Left Column: Image Selection & Display -->
+            <div class="section">
+                <h2>📁 Select Image</h2>
+                
+                <div class="image-selector">
+                    <select id="imageDropdown" onchange="loadSelectedImage()">
+                        <option value="">-- Select an image --</option>
+                    </select>
+                </div>
+                
+                <div class="image-container" id="imageContainer">
+                    <div class="image-placeholder">
+                        <p>Select an image from the dropdown to begin</p>
+                    </div>
+                </div>
+                
+                <!-- API Usage Panel -->
+                <div class="panel">
+                    <h3>📈 API Usage & Costs</h3>
+                    <div class="usage-grid">
+                        <div class="usage-item">
+                            <div class="label">Requests</div>
+                            <div class="value" id="usageRequests">0</div>
+                        </div>
+                        <div class="usage-item">
+                            <div class="label">Total Tokens</div>
+                            <div class="value" id="usageTokens">0</div>
+                        </div>
+                        <div class="usage-item">
+                            <div class="label">Avg / Request</div>
+                            <div class="value" id="usageAvg">0</div>
+                            <div class="sub">tokens</div>
+                        </div>
+                        <div class="usage-item">
+                            <div class="label">Est. Cost</div>
+                            <div class="value" id="usageCost">$0.00</div>
+                        </div>
+                    </div>
+                    <div class="stat-row" style="margin-top:8px; padding-top:8px; border-top:1px solid #e0d5cc;">
+                        <span>Last request:</span>
+                        <span class="value" id="usageLast" style="font-size:11px; color:#9c8b7e;">None</span>
+                    </div>
+                </div>
+                
+                <!-- Cumulative Metrics Panel -->
+                <div class="panel" style="background: #f0f7f0; border-color: #c8e0c8;">
+                    <h3>📊 Cumulative Quality Metrics</h3>
+                    <div class="stat-row">
+                        <span>Pages Evaluated:</span>
+                        <span class="value" id="cumPages">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Avg Word Error Rate:</span>
+                        <span><span class="metric-badge" id="cumWERBadge">0.00%</span></span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Avg Char Error Rate:</span>
+                        <span><span class="metric-badge" id="cumCERBadge">0.00%</span></span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Avg Word Accuracy:</span>
+                        <span class="value" id="cumWordAcc">0.00%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Avg Char Accuracy:</span>
+                        <span class="value" id="cumCharAcc">0.00%</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="recoverMetrics()" style="margin-top: 10px; font-size: 12px;">
+                        🔄 Recover Lost Metrics
+                    </button>
+                </div>
+                
+                <!-- Sync Mapping Panel -->
+                <div class="panel" style="background: #fff8f0; border-color: #f0e0c0;">
+                    <h3>🔄 Sync Mapping</h3>
+                    <p style="font-size: 12px; color: #9c8b7e; margin-bottom: 10px;">
+                        If completed images still appear in the dropdown, click to sync the mapping file with ground truth files.
+                    </p>
+                    <button class="btn btn-primary" onclick="syncMapping()" style="font-size: 12px;">
+                        🔄 Sync with Ground Truth Files
+                    </button>
+                    <div id="syncResult" style="margin-top: 8px; font-size: 12px; color: #5a4a3d;"></div>
+                </div>
+                
+                <div class="completed-list" id="completedList" style="display:none;">
+                    <h3>Completed Images</h3>
+                    <div id="completedItems"></div>
+                </div>
+            </div>
+            
+            <!-- Right Column: OCR & Ground Truth -->
+            <div class="section">
+                <h2>✏️ Annotation</h2>
+                
+                <div class="form-group">
+                    <label>Current Image</label>
+                    <input type="text" id="currentImage" readonly placeholder="No image selected">
+                </div>
+                
+                <div class="form-group">
+                    <label>OCR Draft (Generated by AI)</label>
+                    <textarea id="ocrDraft" readonly rows="5" placeholder="Click 'Generate OCR' to populate..."></textarea>
+                    <button class="btn btn-primary" onclick="generateOCR()" style="width: 100%; margin-top: 5px;">
+                        🤖 Generate OCR
+                    </button>
+                    <div class="token-info" id="tokenInfo">
+                        <div><strong>Session:</strong> <span id="tokenCount">0</span> tokens | $<span id="tokenCost">0.000000</span></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ground Truth (Your Correction)</label>
+                    <textarea id="groundTruth" placeholder="Enter corrected Devanagari text here..." rows="5" oninput="calculateMetrics()"></textarea>
+                </div>
+                
+                <!-- WER/CER Metrics Panel -->
+                <div class="metrics-panel" id="metricsPanel">
+                    <h3>📊 Quality Metrics (OCR vs Ground Truth)</h3>
+                    <div class="stat-row">
+                        <span>Word Error Rate (WER):</span>
+                        <span><span class="metric-badge" id="werBadge">0.00%</span></span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Char Error Rate (CER):</span>
+                        <span><span class="metric-badge" id="cerBadge">0.00%</span></span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Word Accuracy:</span>
+                        <span class="value" id="wordAcc">0.00%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Char Accuracy:</span>
+                        <span class="value" id="charAcc">0.00%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Words (Ref / Hyp):</span>
+                        <span class="value" id="wordCounts">0 / 0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Chars (Ref / Hyp):</span>
+                        <span class="value" id="charCounts">0 / 0</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Transliteration Helper</label>
+                    <input type="text" id="phoneticInput" placeholder="Type English (e.g., namaste)">
+                    <button class="btn btn-primary" onclick="transliterate()" style="width: 100%; margin-top: 5px;">
+                        🔤 Transliterate
+                    </button>
+                    <div class="token-info" id="suggestions" style="display:none;">
+                        Suggestions: <span id="suggestionText"></span>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn btn-success" onclick="saveAnnotation()">
+                        💾 Save Ground Truth
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentImageName = null;
+        
+        // Load images and stats on page load
+        window.addEventListener('load', () => {
+            loadImageList();
+            loadStats();
+            loadUsage();
+            loadCumulativeMetrics();
+        });
+        
+        async function loadImageList() {
+            try {
+                const response = await fetch('/api/images');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const dropdown = document.getElementById('imageDropdown');
+                    // Keep first option, remove others
+                    dropdown.innerHTML = '<option value="">-- Select an image --</option>';
+                    
+                    data.images.forEach(img => {
+                        const option = document.createElement('option');
+                        option.value = img;
+                        option.textContent = img;
+                        dropdown.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading images:', error);
+            }
+        }
+        
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                // Update header stats
+                document.getElementById('headerTotal').textContent = stats.total;
+                document.getElementById('headerCompleted').textContent = stats.completed;
+                document.getElementById('headerRemaining').textContent = stats.remaining;
+                
+                // Update progress bar
+                const progress = stats.progress || 0;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressBar').textContent = Math.round(progress) + '% Complete';
+                
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        async function loadCumulativeMetrics() {
+            try {
+                const response = await fetch('/api/metrics/cumulative');
+                const data = await response.json();
+                
+                if (data.success && data.cumulative) {
+                    const cum = data.cumulative;
+                    const totalPages = cum.total_pages || 0;
+                    
+                    // Update sidebar panel
+                    document.getElementById('cumPages').textContent = totalPages;
+                    
+                    const werPct = (cum.avg_wer * 100).toFixed(2);
+                    const werBadge = document.getElementById('cumWERBadge');
+                    werBadge.textContent = werPct + '%';
+                    werBadge.className = 'metric-badge ' + (cum.avg_wer < 0.1 ? 'metric-good' : cum.avg_wer < 0.3 ? 'metric-warn' : 'metric-bad');
+                    
+                    const cerPct = (cum.avg_cer * 100).toFixed(2);
+                    const cerBadge = document.getElementById('cumCERBadge');
+                    cerBadge.textContent = cerPct + '%';
+                    cerBadge.className = 'metric-badge ' + (cum.avg_cer < 0.05 ? 'metric-good' : cum.avg_cer < 0.15 ? 'metric-warn' : 'metric-bad');
+                    
+                    document.getElementById('cumWordAcc').textContent = (cum.avg_word_accuracy * 100).toFixed(2) + '%';
+                    document.getElementById('cumCharAcc').textContent = (cum.avg_char_accuracy * 100).toFixed(2) + '%';
+                    
+                    // Update header stats
+                    document.getElementById('headerAvgWER').textContent = werPct + '%';
+                    document.getElementById('headerAvgCER').textContent = cerPct + '%';
+                }
+            } catch (error) {
+                console.error('Error loading cumulative metrics:', error);
+            }
+        }
+        
+        async function recoverMetrics() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Recovering...';
+            
+            try {
+                const response = await fetch('/api/metrics/recover', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`Recovered metrics for ${data.recovered} pages`, 'success');
+                    loadCumulativeMetrics();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Error recovering metrics: ' + error, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 Recover Lost Metrics';
+            }
+        }
+        
+        async function syncMapping() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Syncing...';
+            
+            try {
+                const response = await fetch('/api/sync_mapping', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const msg = `Synced ${data.synced} images. Total completed: ${data.total_completed}`;
+                    document.getElementById('syncResult').textContent = msg;
+                    showMessage(msg, 'success');
+                    
+                    // Refresh the dropdown
+                    await loadImageList();
+                    await loadStats();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Error syncing: ' + error, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 Sync with Ground Truth Files';
+            }
+        }
+        
+        async function loadUsage() {
+            try {
+                const response = await fetch('/api/usage');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('usageRequests').textContent = data.total_requests;
+                    document.getElementById('usageTokens').textContent = data.total_tokens.toLocaleString();
+                    document.getElementById('usageAvg').textContent = data.average_tokens_per_request;
+                    document.getElementById('usageCost').textContent = '$' + data.total_cost.toFixed(4);
+                    document.getElementById('headerCost').textContent = '$' + data.total_cost.toFixed(2);
+                    
+                    if (data.last_request) {
+                        const last = data.last_request;
+                        document.getElementById('usageLast').textContent = 
+                            `${last.total_tokens} tokens, $${last.cost.toFixed(6)}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading usage:', error);
+            }
+        }
+        
+        async function loadSelectedImage() {
+            const dropdown = document.getElementById('imageDropdown');
+            const imageName = dropdown.value;
+            
+            if (!imageName) {
+                document.getElementById('imageContainer').innerHTML = 
+                    '<div class="image-placeholder"><p>Select an image to begin</p></div>';
+                document.getElementById('currentImage').value = '';
+                currentImageName = null;
+                // Hide metrics
+                document.getElementById('metricsPanel').classList.remove('show');
+                return;
+            }
+            
+            currentImageName = imageName;
+            document.getElementById('currentImage').value = imageName;
+            
+            // Show loading
+            document.getElementById('imageContainer').innerHTML = 
+                '<div class="image-placeholder"><p>Loading image...</p></div>';
+            
+            try {
+                const response = await fetch('/api/load_image', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({image_name: imageName})
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('imageContainer').innerHTML = 
+                        `<img src="data:image/png;base64,${data.image_base64}" alt="${imageName}" style="max-width:100%;max-height:700px;">`;
+                    
+                    // Clear previous OCR and ground truth
+                    document.getElementById('ocrDraft').value = '';
+                    document.getElementById('groundTruth').value = '';
+                    document.getElementById('tokenInfo').classList.remove('show');
+                    document.getElementById('metricsPanel').classList.remove('show');
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Error loading image: ' + error, 'error');
+            }
+        }
+        
+        async function generateOCR() {
+            if (!currentImageName) {
+                showMessage('Please select an image first', 'error');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            
+            try {
+                const response = await fetch('/api/generate_ocr', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({image_name: currentImageName})
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('ocrDraft').value = data.ocr_text;
+                    
+                    // Show token info
+                    if (data.tokens) {
+                        document.getElementById('tokenInfo').classList.add('show');
+                        document.getElementById('tokenCount').textContent = data.tokens.total.toLocaleString();
+                        document.getElementById('tokenCost').textContent = data.tokens.cost.toFixed(6);
+                    }
+                    
+                    showMessage(data.message, 'success');
+                    
+                    // Refresh usage stats
+                    loadUsage();
+                    
+                    // Recalculate metrics if ground truth exists
+                    calculateMetrics();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Error generating OCR: ' + error, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🤖 Generate OCR';
+            }
+        }
+        
+        async function calculateMetrics() {
+            const reference = document.getElementById('groundTruth').value.trim();
+            const hypothesis = document.getElementById('ocrDraft').value.trim();
+            
+            if (!reference || !hypothesis) {
+                document.getElementById('metricsPanel').classList.remove('show');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/metrics', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        reference: reference,
+                        hypothesis: hypothesis
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('metricsPanel').classList.add('show');
+                    
+                    // WER badge
+                    const werPct = (data.wer * 100).toFixed(2);
+                    const werBadge = document.getElementById('werBadge');
+                    werBadge.textContent = werPct + '%';
+                    werBadge.className = 'metric-badge ' + (data.wer < 0.1 ? 'metric-good' : data.wer < 0.3 ? 'metric-warn' : 'metric-bad');
+                    
+                    // CER badge
+                    const cerPct = (data.cer * 100).toFixed(2);
+                    const cerBadge = document.getElementById('cerBadge');
+                    cerBadge.textContent = cerPct + '%';
+                    cerBadge.className = 'metric-badge ' + (data.cer < 0.05 ? 'metric-good' : data.cer < 0.15 ? 'metric-warn' : 'metric-bad');
+                    
+                    document.getElementById('wordAcc').textContent = (data.word_accuracy * 100).toFixed(2) + '%';
+                    document.getElementById('charAcc').textContent = (data.char_accuracy * 100).toFixed(2) + '%';
+                    document.getElementById('wordCounts').textContent = data.ref_word_count + ' / ' + data.hyp_word_count;
+                    document.getElementById('charCounts').textContent = data.ref_char_count + ' / ' + data.hyp_char_count;
+                }
+            } catch (error) {
+                console.error('Error calculating metrics:', error);
+            }
+        }
+        
+        async function transliterate() {
+            const text = document.getElementById('phoneticInput').value;
+            if (!text) return;
+            
+            try {
+                const response = await fetch('/api/transliterate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text: text})
+                });
+                
+                const data = await response.json();
+                
+                if (data.suggestions && data.suggestions.length > 0) {
+                    document.getElementById('suggestions').style.display = 'block';
+                    document.getElementById('suggestionText').textContent = data.suggestions.join(', ');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        async function saveAnnotation() {
+            if (!currentImageName) {
+                showMessage('Please select an image first', 'error');
+                return;
+            }
+            
+            const groundTruth = document.getElementById('groundTruth').value;
+            const ocrDraft = document.getElementById('ocrDraft').value;
+            
+            if (!groundTruth.trim()) {
+                showMessage('Please enter ground truth text', 'error');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+            
+            try {
+                const response = await fetch('/api/save_annotation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        image_name: currentImageName,
+                        ground_truth: groundTruth,
+                        ocr_draft: ocrDraft
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    let message = `Saved! ${data.remaining} images remaining.`;
+                    
+                    // Show metrics info if available
+                    if (data.metrics && data.metrics.cumulative) {
+                        const cum = data.metrics.cumulative;
+                        const werPct = (cum.avg_wer * 100).toFixed(2);
+                        const cerPct = (cum.avg_cer * 100).toFixed(2);
+                        message += ` WER: ${werPct}%, CER: ${cerPct}%`;
+                    }
+                    
+                    showMessage(message, 'success');
+                    
+                    // Remove from dropdown
+                    const dropdown = document.getElementById('imageDropdown');
+                    const option = dropdown.querySelector(`option[value="${currentImageName}"]`);
+                    if (option) option.remove();
+                    
+                    // Reset display
+                    dropdown.value = '';
+                    document.getElementById('imageContainer').innerHTML = 
+                        '<div class="image-placeholder"><p>Select another image</p></div>';
+                    document.getElementById('currentImage').value = '';
+                    document.getElementById('ocrDraft').value = '';
+                    document.getElementById('groundTruth').value = '';
+                    document.getElementById('tokenInfo').classList.remove('show');
+                    document.getElementById('metricsPanel').classList.remove('show');
+                    currentImageName = null;
+                    
+                    // Update stats and metrics
+                    loadStats();
+                    loadCumulativeMetrics();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Error saving: ' + error, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '💾 Save Ground Truth';
+            }
+        }
+        
+        function showMessage(message, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.textContent = message;
+            msgDiv.className = 'message show ' + type;
+            
+            setTimeout(() => {
+                msgDiv.className = 'message';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

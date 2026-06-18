@@ -1,0 +1,51 @@
+Total pages: 31
+Total speakers detected: 13
+
+First 30 detected speakers:
+1. माननीय श्री आत्माराम गोविन्द खेर
+2. माननीय श्री आत्माराम गोविन्द खेर (स्वशासन मंत्री)
+3. माननीय श्री चरण सिंह कृषि मंत्री
+4. माननीय श्री हुकुम सिंह
+5. माननीय श्री हुकुम सिंह (माल मंत्री)
+6. श्री कृष्ण चन्द्र
+7. श्री गोविन्द सहाय
+8. श्री चतुर्भुज शर्मा
+9. श्री त्रिलोकी सिंह
+10. श्री बनारसी दास
+11. श्री बनासी दास
+12. श्री बादशाह गुप्त
+13. श्री मन्, लोकतंत्रीय शासन व्यवस्था की सफलता न्याय
+
+
+Page breakdown:
+Page 1: 0 speeches, 17 narrative
+Page 2: 0 speeches, 6 narrative
+Page 3: 0 speeches, 95 narrative
+Page 4: 0 speeches, 36 narrative
+Page 5: 0 speeches, 39 narrative
+Page 6: 0 speeches, 42 narrative
+Page 7: 0 speeches, 42 narrative
+Page 8: 0 speeches, 42 narrative
+Page 9: 0 speeches, 24 narrative
+Page 10: 6 speeches, 6 narrative
+Page 11: 6 speeches, 3 narrative
+Page 12: 0 speeches, 23 narrative
+Page 13: 1 speeches, 1 narrative
+Page 14: 0 speeches, 46 narrative
+Page 15: 0 speeches, 45 narrative
+Page 16: 0 speeches, 6 narrative
+Page 17: 1 speeches, 5 narrative
+Page 18: 0 speeches, 43 narrative
+Page 19: 1 speeches, 6 narrative
+Page 20: 2 speeches, 11 narrative
+Page 21: 2 speeches, 4 narrative
+Page 22: 1 speeches, 11 narrative
+Page 23: 1 speeches, 14 narrative
+Page 24: 1 speeches, 12 narrative
+Page 25: 0 speeches, 11 narrative
+Page 26: 0 speeches, 5 narrative
+Page 27: 0 speeches, 7 narrative
+Page 28: 0 speeches, 44 narrative
+Page 29: 0 speeches, 4 narrative
+Page 30: 0 speeches, 46 narrative
+Page 31: 1 speeches, 38 narrative
