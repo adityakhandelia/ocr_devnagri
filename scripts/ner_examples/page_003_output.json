@@ -1,0 +1,588 @@
+{
+  "page_number": 3,
+  "total_words": 308,
+  "entities": [
+    {
+      "label": "NUMBER",
+      "start": 1,
+      "end": 1,
+      "text": "**१८]**"
+    },
+    {
+      "label": "ORG",
+      "start": 2,
+      "end": 3,
+      "text": "**विधान सभा**"
+    },
+    {
+      "label": "DATE",
+      "start": 4,
+      "end": 6,
+      "text": "**[७ मार्च, १९५२**"
+    },
+    {
+      "label": "NUMBER",
+      "start": 7,
+      "end": 8,
+      "text": "**[स्तम्भ १]**"
+    },
+    {
+      "label": "PERSON",
+      "start": 9,
+      "end": 12,
+      "text": "द्वारिका प्रसाद मौर्य, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 13,
+      "end": 15,
+      "text": "दीनदयालु अवस्थी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 16,
+      "end": 18,
+      "text": "दीनदयालु शर्मा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 19,
+      "end": 21,
+      "text": "दीनदयालु शास्त्री, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 22,
+      "end": 24,
+      "text": "दीपनारायण वर्मा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 25,
+      "end": 28,
+      "text": "नवाज़िश अली खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 29,
+      "end": 32,
+      "text": "नवाब सिंह चौहान, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 33,
+      "end": 35,
+      "text": "नाज़िम अली, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 36,
+      "end": 37,
+      "text": "नारायणदास, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 38,
+      "end": 41,
+      "text": "निसार अहमद शेरवानी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 42,
+      "end": 44,
+      "text": "प्रकाशवती सूद, श्रीमती"
+    },
+    {
+      "label": "PERSON",
+      "start": 45,
+      "end": 47,
+      "text": "प्रयाग नारायण, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 48,
+      "end": 50,
+      "text": "प्रेमकिशन खन्ना, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 51,
+      "end": 53,
+      "text": "प्रेमलाल वैद्य, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 54,
+      "end": 56,
+      "text": "फ़ख़रुल इस्लाम, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 57,
+      "end": 59,
+      "text": "फ़तेहसिंह राणा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 60,
+      "end": 62,
+      "text": "बदन सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 63,
+      "end": 65,
+      "text": "बनारसी दास, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 66,
+      "end": 68,
+      "text": "बलदेव प्रसाद, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 69,
+      "end": 72,
+      "text": "बशीर अहमद अन्सारी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 73,
+      "end": 76,
+      "text": "बशीर अहमद हकीम, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 77,
+      "end": 79,
+      "text": "ब्रजमोहनलाल शास्त्री, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 80,
+      "end": 82,
+      "text": "ब्रजरानी देवी, श्रीमती"
+    },
+    {
+      "label": "PERSON",
+      "start": 83,
+      "end": 85,
+      "text": "बेचनराम गुप्त, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 86,
+      "end": 89,
+      "text": "भगवती प्रसाद दुबे, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 90,
+      "end": 93,
+      "text": "भगवती प्रसाद शुक्ल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 94,
+      "end": 95,
+      "text": "भगवानदीन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 96,
+      "end": 98,
+      "text": "भगवानदीन मिश्र, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 99,
+      "end": 102,
+      "text": "भारत सिंह यादवाचार्य, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 103,
+      "end": 104,
+      "text": "भीमसेन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 105,
+      "end": 107,
+      "text": "मंगला प्रसाद, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 108,
+      "end": 111,
+      "text": "मक़सूद आलम खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 112,
+      "end": 113,
+      "text": "मंसुरियादीन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 114,
+      "end": 115,
+      "text": "महफ़ूज़ुर्रहमान, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 116,
+      "end": 119,
+      "text": "महमूद अली खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 120,
+      "end": 124,
+      "text": "महमूद अली खां, श्री (रामपुर)"
+    },
+    {
+      "label": "PERSON",
+      "start": 125,
+      "end": 126,
+      "text": "मिजाजीलाल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 127,
+      "end": 129,
+      "text": "मुकुन्दलाल अग्रवाल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 130,
+      "end": 133,
+      "text": "मुख़्तार अहमद क़िदवाई, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 134,
+      "end": 136,
+      "text": "मुज़फ़्फ़र हुसैन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 137,
+      "end": 140,
+      "text": "मुहम्मद अदील अब्बासी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 141,
+      "end": 144,
+      "text": "मुहम्मद असरार अहमद, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 145,
+      "end": 148,
+      "text": "मुहम्मद इब्राहीम, माननीय श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 149,
+      "end": 151,
+      "text": "मुहम्मद इस्माईल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 152,
+      "end": 156,
+      "text": "मुहम्मद उबैदुर्रहमान खां शेरवानी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 157,
+      "end": 159,
+      "text": "मुहम्मद एवज़, श्री"
+    },
+    {
+      "label": "NUMBER",
+      "start": 160,
+      "end": 161,
+      "text": "**[स्तम्भ २]**"
+    },
+    {
+      "label": "PERSON",
+      "start": 162,
+      "end": 166,
+      "text": "मुहम्मद जमशेद अली खां, नवाब"
+    },
+    {
+      "label": "PERSON",
+      "start": 167,
+      "end": 169,
+      "text": "मुहम्मद नज़ीर, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 170,
+      "end": 173,
+      "text": "मुहम्मद फ़ारूक़ चिश्ती, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 174,
+      "end": 177,
+      "text": "मुहम्मद रहमत खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 178,
+      "end": 180,
+      "text": "मुहम्मद शकूर, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 181,
+      "end": 184,
+      "text": "मुहम्मद शाहिद फ़ाख़री, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 185,
+      "end": 187,
+      "text": "मुहम्मद शोएब, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 188,
+      "end": 192,
+      "text": "मुहम्मद सज्जादत अली खां, राजा"
+    },
+    {
+      "label": "PERSON",
+      "start": 193,
+      "end": 196,
+      "text": "मुहम्मद सुलेमान अधमी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 197,
+      "end": 199,
+      "text": "यज्ञनारायण उपाध्याय, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 200,
+      "end": 203,
+      "text": "रघुनाथ विनायक धुलेकर, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 204,
+      "end": 206,
+      "text": "राघव दास, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 207,
+      "end": 210,
+      "text": "रघुवंश नारायण सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 211,
+      "end": 213,
+      "text": "रघुवीर सहाय, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 214,
+      "end": 216,
+      "text": "राजाराम मिश्र, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 217,
+      "end": 219,
+      "text": "राजाराम शास्त्री, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 220,
+      "end": 222,
+      "text": "राधाकृष्ण अग्रवाल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 223,
+      "end": 225,
+      "text": "राधामोहन सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 226,
+      "end": 228,
+      "text": "राधेश्याम शर्मा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 229,
+      "end": 231,
+      "text": "रामकुमार शास्त्री, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 232,
+      "end": 234,
+      "text": "रामकृपाल सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 235,
+      "end": 237,
+      "text": "रामचन्द्र पालीवाल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 238,
+      "end": 240,
+      "text": "रामचन्द्र सेहरा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 241,
+      "end": 243,
+      "text": "रामजी सहाय, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 244,
+      "end": 246,
+      "text": "रामधारी पाण्डे, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 247,
+      "end": 249,
+      "text": "रामनन्दन सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 250,
+      "end": 252,
+      "text": "रामबली मिश्र, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 253,
+      "end": 254,
+      "text": "राममूर्ति, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 255,
+      "end": 257,
+      "text": "रामशंकर लाल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 258,
+      "end": 259,
+      "text": "रामशरण, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 260,
+      "end": 262,
+      "text": "रामस्वरूप गुप्त, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 263,
+      "end": 266,
+      "text": "रामेश्वर सहाय सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 267,
+      "end": 269,
+      "text": "रुक्नुद्दीन खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 270,
+      "end": 273,
+      "text": "रोशन ज़मां खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 274,
+      "end": 276,
+      "text": "लक्ष्मी देवी, श्रीमती"
+    },
+    {
+      "label": "PERSON",
+      "start": 277,
+      "end": 279,
+      "text": "लताफ़त हुसैन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 280,
+      "end": 282,
+      "text": "लाखनदास जाटव, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 283,
+      "end": 285,
+      "text": "लालबिहारी टंडन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 286,
+      "end": 288,
+      "text": "लीलाधर अष्ठाना, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 289,
+      "end": 292,
+      "text": "लुत्फ़ अली खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 293,
+      "end": 294,
+      "text": "लोटनराम, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 295,
+      "end": 296,
+      "text": "वंशगोपाल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 297,
+      "end": 299,
+      "text": "वंशीधर मिश्र, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 300,
+      "end": 302,
+      "text": "विजयानन्द मिश्र, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 303,
+      "end": 305,
+      "text": "विद्याधर बाजपेयी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 306,
+      "end": 308,
+      "text": "विद्यावती राठौर, श्रीमती"
+    }
+  ]
+}

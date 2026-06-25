@@ -1,0 +1,29 @@
+You are parsing a Hindi parliamentary transcript (OCR output) into structured segments.
+
+Each word of the page is numbered with a zero-based index. Your task is to return only index ranges for each segment type.
+
+## Segment types
+
+- `metadata`: Page header/footer, volume info, dates
+- `headings`: Section titles, bold/centered text
+- `announcements`: Chair/official announcements (often contain "माननीय अध्यक्ष", "घोषणा", formal language)
+- `speeches`: Words spoken by a member (starts with a name followed by --, —, or :)
+- `member_lists`: List of names without a clear speaker
+- `narrative`: Stage directions, procedural notes, parenthetical text
+
+## Rules
+
+1. Use inclusive `[start, end]` ranges.
+2. Every word index must belong to exactly one segment.
+3. A speech range must include the speaker name. Use `speaker_range` as a sub-range inside the main speech range.
+4. Announcements can have a `subtype`: "chair", "clerk", or "bill".
+5. Output ONLY valid JSON. No explanation.
+
+## Examples
+
+[EXAMPLES_PLACEHOLDER]
+
+Now parse this page:
+[PAGE_WORDS_PLACEHOLDER]
+
+Output only the JSON.

@@ -1,14 +1,8 @@
-import { User, FileText } from 'lucide-react';
-import type { Speech } from '../types';
+import { User, FileText, Info, Users, ScrollText } from 'lucide-react';
+import type { Segment } from '../types';
 
 interface SpeechViewProps {
-  speeches: Speech[];
-}
-
-interface GroupedBlock {
-  speaker: string | null;
-  type: 'speech' | 'narrative' | 'heading';
-  paragraphs: string[];
+  segments: Segment[];
 }
 
 /**
@@ -18,7 +12,6 @@ interface GroupedBlock {
 function InlineMarkdown({ text }: { text: string }) {
   if (!text) return null;
 
-  // Split on **bold** first, then on *italic*
   const boldParts = text.split(/(\*\*.*?\*\*)/g);
 
   return (
@@ -51,8 +44,8 @@ function InlineMarkdown({ text }: { text: string }) {
   );
 }
 
-export function SpeechView({ speeches }: SpeechViewProps) {
-  if (!speeches || speeches.length === 0) {
+export function SpeechView({ segments }: SpeechViewProps) {
+  if (!segments || segments.length === 0) {
     return (
       <div className="text-center py-12 text-slate-500">
         <FileText size={48} className="mx-auto mb-4 opacity-50" />
@@ -61,92 +54,93 @@ export function SpeechView({ speeches }: SpeechViewProps) {
     );
   }
 
-  // Group consecutive blocks by same speaker and same type
-  const blocks: GroupedBlock[] = [];
-
-  speeches.forEach((speech) => {
-    const lastBlock = blocks[blocks.length - 1];
-
-    if (
-      lastBlock &&
-      lastBlock.speaker === speech.speaker &&
-      lastBlock.type === speech.type
-    ) {
-      lastBlock.paragraphs.push(speech.text);
-    } else {
-      blocks.push({
-        speaker: speech.speaker,
-        type: speech.type,
-        paragraphs: [speech.text],
-      });
-    }
-  });
-
   return (
-    <div className="space-y-6">
-      {blocks.map((block, index) => {
-        // Headings: centered, bold, not italic
-        if (block.type === 'heading') {
+    <div className="space-y-4">
+      {segments.map((segment, index) => {
+        const key = `${segment.type}-${segment.start_index}-${index}`;
+
+        // Metadata: page header/footer info
+        if (segment.type === 'metadata') {
           return (
-            <div key={index} className="text-center py-4">
-              {block.paragraphs.map((para, i) => (
-                <h2
-                  key={i}
-                  className="text-xl md:text-2xl font-bold text-slate-900 hindi-heading"
-                >
-                  <InlineMarkdown text={para} />
-                </h2>
-              ))}
+            <div key={key} className="flex items-start gap-2 text-xs text-slate-500 border-b border-slate-100 pb-2">
+              <Info size={14} className="mt-0.5 flex-shrink-0" />
+              <span className="hindi-text"><InlineMarkdown text={segment.text} /></span>
+            </div>
+          );
+        }
+
+        // Headings: centered, bold
+        if (segment.type === 'heading') {
+          return (
+            <div key={key} className="text-center py-4">
+              <h2 className="text-xl md:text-2xl font-bold text-slate-900 hindi-heading">
+                <InlineMarkdown text={segment.text} />
+              </h2>
+            </div>
+          );
+        }
+
+        // Announcements: chair/clerk/bill notices
+        if (segment.type === 'announcement') {
+          return (
+            <div key={key} className="bg-amber-50 border-l-4 border-amber-400 p-4 my-4">
+              <div className="flex items-center gap-2 text-amber-800 text-sm font-semibold mb-1">
+                <ScrollText size={16} />
+                <span className="uppercase tracking-wide">
+                  {segment.subtype || 'Announcement'}
+                </span>
+              </div>
+              <p className="text-slate-800 hindi-text leading-relaxed">
+                <InlineMarkdown text={segment.text} />
+              </p>
+            </div>
+          );
+        }
+
+        // Member lists
+        if (segment.type === 'member_list') {
+          return (
+            <div key={key} className="bg-slate-50 border border-slate-200 rounded p-4 my-4">
+              <div className="flex items-center gap-2 text-slate-600 text-sm font-semibold mb-2">
+                <Users size={16} />
+                <span>Members</span>
+              </div>
+              <p className="text-slate-800 hindi-text leading-relaxed">
+                <InlineMarkdown text={segment.text} />
+              </p>
             </div>
           );
         }
 
         // Narrative / stage directions
-        if (block.type === 'narrative' || !block.speaker) {
+        if (segment.type === 'narrative') {
+          const isStageDirection = segment.text.startsWith('(') && segment.text.endsWith(')');
           return (
-            <div
-              key={index}
-              className="text-slate-700 hindi-text leading-relaxed"
+            <p
+              key={key}
+              className={`text-slate-700 hindi-text leading-relaxed ${isStageDirection ? 'italic text-slate-600' : ''}`}
             >
-              {block.paragraphs.map((para, i) => {
-                const isStageDirection =
-                  para.startsWith('(') && para.endsWith(')');
-                return (
-                  <p
-                    key={i}
-                    className={`
-                      ${i > 0 ? 'mt-3' : ''}
-                      ${isStageDirection ? 'italic text-slate-600' : ''}
-                    `}
-                  >
-                    <InlineMarkdown text={para} />
-                  </p>
-                );
-              })}
-            </div>
+              <InlineMarkdown text={segment.text} />
+            </p>
           );
         }
 
         // Speech block
         return (
-          <article key={index} className="py-4">
+          <article key={key} className="py-4 border-b border-slate-100 last:border-b-0">
             <div className="flex items-start gap-3 mb-3 pb-2 border-b border-slate-200">
               <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center">
                 <User size={18} />
               </div>
               <div>
                 <h3 className="font-bold text-slate-900 text-lg hindi-heading">
-                  {block.speaker}
+                  {segment.speaker || 'Unknown Speaker'}
                 </h3>
               </div>
             </div>
 
-            <div className="hindi-text text-slate-800 space-y-4 leading-relaxed pl-12">
-              {block.paragraphs.map((para, i) => (
-                <p key={i}>
-                  <InlineMarkdown text={para} />
-                </p>
-              ))}
+            <div className="hindi-text text-slate-800 leading-relaxed pl-12">
+              <p><InlineMarkdown text={segment.text} /></p>
             </div>
           </article>
         );

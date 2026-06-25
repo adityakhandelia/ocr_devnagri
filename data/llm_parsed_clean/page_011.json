@@ -1,0 +1,317 @@
+{
+  "page_number": 11,
+  "image": "data/full_pdf_images/1952_1_100_2/1952_1_100_2_page_011",
+  "thumbnail": "data/full_pdf_images/1952_1_100_2/1952_1_100_2_page_011",
+  "segments": [
+    {
+      "type": "metadata",
+      "start_index": 0,
+      "end_index": 7,
+      "text": "२६ विधान सभा ७ मार्च, १९५२",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "heading",
+      "start_index": 8,
+      "end_index": 27,
+      "text": "यू० पी० मोटर वेहिकिल्स ऐक्ट, १९३६ ई० की धारा १३३ (३) के अन्तर्गत नियम १३० \"ए\" में किए गए संशोधन",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "speech",
+      "start_index": 28,
+      "end_index": 69,
+      "text": "माननीय श्री हुकुम सिंह--  महोदय, में यू० पी० मोटर वेहिकिल्स ऐक्ट, १९३६ ई० की धारा १३३ (३) के अन्तर्गत, यू० पी० मोटर वेहिकिल्स रूल्स, १९४० ई० के नियम १३० (ए) में किये गये संशोधन को प्रतिलिपि मेज पर रखता हूं",
+      "subtype": null,
+      "speaker": "माननीय अध्यक्ष",
+      "speaker_range": [
+        28,
+        31
+      ]
+    },
+    {
+      "type": "narrative",
+      "start_index": 70,
+      "end_index": 76,
+      "text": "(देखिये नत्थी 'छ' आगे पृष्ठ ८१ पर)",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "heading",
+      "start_index": 77,
+      "end_index": 99,
+      "text": "१९४८ ई० के कृषि-आय-कर ऐक्ट की धारा ४४ (३) के अन्तर्गत नियम १६, १८, २५ (च), (छ) और (ज) में किये गये संशोधन",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "speech",
+      "start_index": 100,
+      "end_index": 147,
+      "text": "माननीय श्री हुकुम सिंह-  महोदय, में सन् १९४८ ई० का कृषि-आय- कर ऐक्ट की धारा ४४ (३) के अन्तर्गत सन् १९४८ ई० के युक्त प्रान्तीय कृषि-आय-कर नियमों के नियम १६, १८, २५ (च), (छ) और (ज) में किये गये संशोधनों की प्रतिलिपि मेज पर रखता हूं",
+      "subtype": null,
+      "speaker": "माननीय अध्यक्ष",
+      "speaker_range": [
+        100,
+        103
+      ]
+    },
+    {
+      "type": "narrative",
+      "start_index": 148,
+      "end_index": 154,
+      "text": "(देखिये नत्थी 'ज' आगे पृष्ठ ८२ पर)",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "heading",
+      "start_index": 155,
+      "end_index": 173,
+      "text": "यू० पी० मोटर वेहिकिल्स ऐक्ट, १९३६ की धारा १३३ (३) के अन्तर्गत नियम २५ (सी) में किये गये संशोधन",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "speech",
+      "start_index": 174,
+      "end_index": 215,
+      "text": "माननीय श्री हुकुम सिंह--  महोदय, में यू० पी० मोटर वेहिकिल्स ऐक्ट, १९३६ ई० की धारा १३३ (३) के अन्तर्गत, यू० पी० मोटर वेहिकिल्स रूल्स, १९४० ई० के नियम २५ (सी) में किये गये संशोधन की प्रतिलिपि मेज़ पर रखता हूं",
+      "subtype": null,
+      "speaker": "माननीय अध्यक्ष",
+      "speaker_range": [
+        174,
+        177
+      ]
+    },
+    {
+      "type": "narrative",
+      "start_index": 216,
+      "end_index": 222,
+      "text": "(देखिये नत्थी 'झ' आगे पृष्ठ ८३ पर)",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "heading",
+      "start_index": 223,
+      "end_index": 241,
+      "text": "यू० पी० मोटर वेहिकिल्स ऐक्ट, १९३६ की धारा १३३ (३) के अन्तर्गत नियम ५७ (ए) में किये गये संशोधन",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "speech",
+      "start_index": 242,
+      "end_index": 285,
+      "text": "माननीय श्री हुकुम सिंह--  महोदय, में यू० पी० मोटर वेहिकिल्स ऐक्ट सन् १९३६ ई० की धारा १३३ (३) के अन्तर्गत, यू० पी० मोटर वेहिकिल्स रूल्स सन् १९४० ई० के नियम ५७ (ए) में किये गये संशोधन की प्रतिलिपि मेज पर रखता हूं",
+      "subtype": null,
+      "speaker": "माननीय अध्यक्ष",
+      "speaker_range": [
+        242,
+        245
+      ]
+    },
+    {
+      "type": "narrative",
+      "start_index": 286,
+      "end_index": 292,
+      "text": "(देखिये नत्थी 'ञ' आगे पृष्ठ ८४ पर)",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "heading",
+      "start_index": 293,
+      "end_index": 311,
+      "text": "यू० पी० मोटर वेहिकिल्स ऐक्ट, १९३६ की धारा १३३ (३) के अन्तर्गत नियम ४४ (ए) में किये गये संशोधन",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "speech",
+      "start_index": 312,
+      "end_index": 357,
+      "text": "माननीय श्री हुकुम सिंह--  महोदय, में यू० पी० मोटर वेहिकिल्स ऐक्ट, सन् १९३६ ई० की धारा १३३ (३) के अन्तर्गत यू० पी० मोटर वेहिकिल्स रूल्स, सन् १९४० ई० के नियम ४४ (ए) में किये गये संशोधनों की (क) (२) प्रतिलिपियां मेज पर रखता हूं",
+      "subtype": null,
+      "speaker": "माननीय अध्यक्ष",
+      "speaker_range": [
+        312,
+        315
+      ]
+    },
+    {
+      "type": "narrative",
+      "start_index": 358,
+      "end_index": 364,
+      "text": "(देखिये नत्थी 'ट' आगे पृष्ठ ८५-८६ पर)",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "heading",
+      "start_index": 365,
+      "end_index": 376,
+      "text": "यू० पी० पब्लिक सर्विस कमीशन की सन् १९४९-५० ई० की वार्षिक रिपोर्ट",
+      "subtype": null,
+      "speaker": null
+    },
+    {
+      "type": "speech",
+      "start_index": 377,
+      "end_index": 398,
+      "text": "माननीय श्री चरण सिंह कृषि मंत्री-  महोदय, में यू० पी० पब्लिक सर्विस कमीशन की वार्षिक रिपोर्ट मेज पर रखता हूं",
+      "subtype": null,
+      "speaker": "माननीय अध्यक्ष",
+      "speaker_range": [
+        377,
+        382
+      ]
+    },
+    {
+      "type": "narrative",
+      "start_index": 399,
+      "end_index": 405,
+      "text": "(देखिये नत्थी 'ठ' आगे पृष्ठ ८७-९३ पर)",
+      "subtype": null,
+      "speaker": null
+    }
+  ],
+  "segment_stats": {
+    "metadata": 1,
+    "heading": 6,
+    "speech": 6,
+    "narrative": 6
+  },
+  "page_type": "debate",
+  "total_words": 406,
+  "llm_output": {
+    "page_number": 26,
+    "total_words": 406,
+    "metadata": [
+      [
+        0,
+        7
+      ]
+    ],
+    "headings": [
+      [
+        8,
+        27
+      ],
+      [
+        77,
+        99
+      ],
+      [
+        155,
+        173
+      ],
+      [
+        223,
+        241
+      ],
+      [
+        293,
+        311
+      ],
+      [
+        365,
+        376
+      ]
+    ],
+    "announcements": [],
+    "speeches": [
+      {
+        "range": [
+          28,
+          69
+        ],
+        "speaker_range": [
+          28,
+          31
+        ]
+      },
+      {
+        "range": [
+          100,
+          147
+        ],
+        "speaker_range": [
+          100,
+          103
+        ]
+      },
+      {
+        "range": [
+          174,
+          215
+        ],
+        "speaker_range": [
+          174,
+          177
+        ]
+      },
+      {
+        "range": [
+          242,
+          285
+        ],
+        "speaker_range": [
+          242,
+          245
+        ]
+      },
+      {
+        "range": [
+          312,
+          357
+        ],
+        "speaker_range": [
+          312,
+          315
+        ]
+      },
+      {
+        "range": [
+          377,
+          398
+        ],
+        "speaker_range": [
+          377,
+          382
+        ]
+      }
+    ],
+    "member_lists": [],
+    "narrative": [
+      [
+        70,
+        76
+      ],
+      [
+        148,
+        154
+      ],
+      [
+        216,
+        222
+      ],
+      [
+        286,
+        292
+      ],
+      [
+        358,
+        364
+      ],
+      [
+        399,
+        405
+      ]
+    ]
+  }
+}

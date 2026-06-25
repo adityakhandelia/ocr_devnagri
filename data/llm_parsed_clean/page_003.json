@@ -1,0 +1,41 @@
+{
+  "page_number": 3,
+  "image": "data/full_pdf_images/1952_1_100_2/1952_1_100_2_page_003",
+  "thumbnail": "data/full_pdf_images/1952_1_100_2/1952_1_100_2_page_003",
+  "segments": [
+    {
+      "type": "metadata",
+      "start_index": 0,
+      "end_index": 7,
+      "text": "१८ विधान सभा ७ मार्च, १९५२ स्तम्भ १",
+      "subtype": null,
+      "speaker": null
+    }
+  ],
+  "segment_stats": {
+    "metadata": 1,
+    "member_list": 1
+  },
+  "page_type": "member_list",
+  "total_words": 308,
+  "llm_output": {
+    "page_number": 18,
+    "total_words": 308,
+    "metadata": [
+      [
+        0,
+        7
+      ]
+    ],
+    "headings": [],
+    "announcements": [],
+    "speeches": [],
+    "member_lists": [
+      [
+        8,
+        307
+      ]
+    ],
+    "narrative": []
+  }
+}

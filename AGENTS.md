@@ -30,7 +30,77 @@
 
 ## Execution Log
 
-### Session 1: Project Initialization
+### Session 11: NER Pipeline for Member Names
+**Date:** 2026-06-24
+**Agent:** opencode
+
+#### Completed Tasks
+1. ✅ Created `scripts/check_token_count.py` to measure prompt tokens across DeepSeek models via OpenRouter
+2. ✅ Created NER indexing and example infrastructure
+   - `scripts/ner_indexer.py`: converts OCR pages to 1-based `word##index` format
+   - `scripts/create_ner_examples.py`: line-based annotation for simple member-list pages
+   - `scripts/create_ner_example_page_002.py`: table-format annotation for page 002
+3. ✅ Generated 3 gold NER example pages
+   - `scripts/ner_examples/page_002_input.txt` / `_output.json` (markdown table, 62 PERSON entities)
+   - `scripts/ner_examples/page_003_input.txt` / `_output.json` (single-column list, 97 entities)
+   - `scripts/ner_examples/page_004_input.txt` / `_output.json` (single-column list + note, 35 entities)
+4. ✅ Created NER LLM parser
+   - `scripts/ner_llm_parser.py`: prompt builder, API caller, validation, retry loop
+   - `scripts/run_ner_pipeline.py`: end-to-end runner with `--page`, `--limit`, `--prompt-only` flags
+   - Uses `deepseek/deepseek-v4-flash` by default
+5. ✅ Verified prompt token counts
+   - 1 example + target page: ~8,093 tokens
+   - 3 examples + target page: ~13,970 tokens
+
+#### Blockers
+- OpenRouter balance ($0.0125) is insufficient to run the NER LLM pipeline
+- Each NER call with 3 examples costs ~$0.0013 per page (input only), much less than originally estimated
+
+#### Next Steps
+1. Add OpenRouter credits (~$5 recommended for member-list pages + retries)
+2. Run a test NER parse on page 004 using pages 002 and 003 as examples
+3. Review output, fix edge cases, and iterate on examples/prompt
+4. Annotate 1 more page if needed, then run on all member-list pages
+5. Merge extracted PERSON entities into the frontend member-list view or dataset
+
+### Session 12: Professional UI with JSON Entity Unfolding
+**Date:** 2026-06-25
+**Agent:** opencode
+
+#### Completed Tasks
+1. ✅ Enriched LLM-parsed JSON output in `scripts/run_llm_pipeline.py`
+   - Added `page_type`, `total_words`, `segment_stats`, `image`, `thumbnail`
+   - Added global `segment_counts` and `total_words`
+   - Text cleaning: removed `**` markdown markers from segment text
+2. ✅ Updated `frontend/src/types.ts` to match enriched schema
+3. ✅ Created reusable UI utilities and components
+   - `frontend/src/lib/segmentStyles.ts`: color/icon/label mapping per entity type
+   - `frontend/src/components/SegmentBadge.tsx`: entity-type badge
+   - `frontend/src/components/SpeakerAvatar.tsx`: colored avatar with initials
+   - `frontend/src/components/EntityFilter.tsx`: filter segments by entity type
+   - `frontend/src/components/SegmentView.tsx`: clear visual separation by entity type
+4. ✅ Updated `frontend/src/App.tsx`
+   - Integrated entity filter panel
+   - Shows page type and word count
+   - Empty state when filters hide all segments
+5. ✅ Updated `frontend/src/components/StatsCards.tsx` to use new segment counts
+6. ✅ Production build succeeded (`frontend/dist/`)
+7. ✅ Added post-processor `scripts/postprocess_segments.py`
+   - Removes markdown/table artifacts from all segment text
+   - Converts chair announcements/headings into speech by `माननीय अध्यक्ष`
+   - Splits member lists into structured `{name, honorific}` arrays
+   - Produces clean `data/llm_parsed_clean/` JSON
+8. ✅ Updated `SegmentView.tsx` to render structured member lists in a 3-column grid
+
+#### Next Steps
+1. Test locally with `npm run dev` and review the cleaned output
+2. Deploy updated UI to GitHub Pages (requires git push)
+3. Re-run LLM parser on remaining pages with Flash for consistent enriched JSON
+4. Add page thumbnail/image viewer if images are served alongside the app
+
+### Session 10: LLM Parser Pipeline Improvements & UI Segment Rendering
+**Date:** 2026-06-23
+**Agent:** opencode
 **Date:** 2024-06-04
 **Agent:** opencode
 

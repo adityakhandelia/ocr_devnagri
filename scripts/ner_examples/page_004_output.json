@@ -1,0 +1,216 @@
+{
+  "page_number": 4,
+  "total_words": 137,
+  "entities": [
+    {
+      "label": "ORG",
+      "start": 1,
+      "end": 5,
+      "text": "उपस्थित सदस्यों की सूची [१६"
+    },
+    {
+      "label": "PERSON",
+      "start": 6,
+      "end": 9,
+      "text": "विनय कुमार मुकर्जी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 10,
+      "end": 12,
+      "text": "विश्वनाथ प्रसाद, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 13,
+      "end": 16,
+      "text": "विष्णु शरण दुब्लिश, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 17,
+      "end": 19,
+      "text": "बीरबल सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 20,
+      "end": 22,
+      "text": "वीरेन्द्र शाह, राजा"
+    },
+    {
+      "label": "PERSON",
+      "start": 23,
+      "end": 26,
+      "text": "वेंकटेश नारायण तिवारी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 27,
+      "end": 30,
+      "text": "शंकर दत्त शर्मा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 31,
+      "end": 34,
+      "text": "शान्ति प्रपन्न शर्मा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 35,
+      "end": 37,
+      "text": "शिवकुमार पाण्डे, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 38,
+      "end": 40,
+      "text": "शिवकुमार मिश्र, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 41,
+      "end": 43,
+      "text": "शिवदयाल उपाध्याय, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 44,
+      "end": 46,
+      "text": "शिवदान सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 47,
+      "end": 49,
+      "text": "शिवमंगल सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 50,
+      "end": 53,
+      "text": "शिवमंगल सिंह कपूर, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 54,
+      "end": 57,
+      "text": "श्याम लाल वर्मा, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 58,
+      "end": 61,
+      "text": "श्याम सुन्दर शुक्ल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 62,
+      "end": 65,
+      "text": "श्यामाचरण वाजपेयी शास्त्री, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 66,
+      "end": 68,
+      "text": "श्रीचन्द सिंहल, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 69,
+      "end": 71,
+      "text": "श्रीपति सहाय, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 72,
+      "end": 74,
+      "text": "सईद अहमद, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 75,
+      "end": 78,
+      "text": "सज्जन देवी महनोत, श्रीमती"
+    },
+    {
+      "label": "PERSON",
+      "start": 79,
+      "end": 81,
+      "text": "सरवत हुसैन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 82,
+      "end": 85,
+      "text": "सलीम हामिद खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 86,
+      "end": 88,
+      "text": "साजिद हुसैन, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 89,
+      "end": 91,
+      "text": "सिंहासन सिंह, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 92,
+      "end": 95,
+      "text": "सैयद ज़ाकिर अली, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 96,
+      "end": 98,
+      "text": "सुदामा प्रसाद, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 99,
+      "end": 102,
+      "text": "सुल्तान आलम खां, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 103,
+      "end": 106,
+      "text": "सूर्य प्रसाद अवस्थी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 107,
+      "end": 109,
+      "text": "हबीबुर्रहमान अन्सारी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 110,
+      "end": 112,
+      "text": "हरगोविन्द पन्त, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 113,
+      "end": 116,
+      "text": "हर प्रसाद सत्यप्रेमी, श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 117,
+      "end": 120,
+      "text": "हुकुम सिंह, माननीय श्री"
+    },
+    {
+      "label": "PERSON",
+      "start": 121,
+      "end": 123,
+      "text": "होतीलाल अग्रवाल, श्री"
+    },
+  ]
+}

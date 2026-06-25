@@ -174,3 +174,28 @@ data/test/
 
 # Rollbacked old files
 rollbacked_files/
+# Generated LLM raw outputs (cleaned versions kept)
+data/llm_parsed/
+data/ner_parsed/
+
+# Temp prompt/debug files
+scripts/*_test.txt
+scripts/pipeline_*.txt
+scripts/page_*_test.txt
+scripts/page_*_prompt.txt
+scripts/page_*_run.txt
+scripts/page_*_segment_run.txt
+scripts/ner_prompt_page_*.txt
+scripts/*_output.txt
+scripts/*_reconstructed.txt
+scripts/debug_*.txt
+scripts/auto_mark_output.txt
+scripts/llm_prompt_ready.txt
+scripts/UI_RENDERING_DEMO.md
+scripts/manual_marking_template.json
+
+# Per-page manual marking temp files
+scripts/page_009_*.json
+scripts/page_009_*.txt
+scripts/page_010_*.txt
+scripts/pending_examples/

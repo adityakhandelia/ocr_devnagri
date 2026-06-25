@@ -1,0 +1,41 @@
+{
+  "page_number": 4,
+  "image": "data/full_pdf_images/1952_1_100_2/1952_1_100_2_page_004",
+  "thumbnail": "data/full_pdf_images/1952_1_100_2/1952_1_100_2_page_004",
+  "segments": [
+    {
+      "type": "heading",
+      "start_index": 0,
+      "end_index": 4,
+      "text": "उपस्थित सदस्यों की सूची १६",
+      "subtype": null,
+      "speaker": null
+    }
+  ],
+  "segment_stats": {
+    "heading": 1,
+    "member_list": 1
+  },
+  "page_type": "member_list",
+  "total_words": 137,
+  "llm_output": {
+    "page_number": 0,
+    "total_words": 137,
+    "metadata": [],
+    "headings": [
+      [
+        0,
+        4
+      ]
+    ],
+    "announcements": [],
+    "speeches": [],
+    "member_lists": [
+      [
+        5,
+        136
+      ]
+    ],
+    "narrative": []
+  }
+}

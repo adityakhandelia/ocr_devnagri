@@ -1,0 +1,17 @@
+{
+  "page_number": 9,
+  "total_words": 344,
+  "metadata": [[0, 7]],
+  "headings": [[8, 11], [103, 118], [160, 173], [206, 219], [245, 257]],
+  "announcements": [
+    {"range": [12, 40], "subtype": "chair"},
+    {"range": [119, 149], "subtype": "chair"}
+  ],
+  "speeches": [
+    {"range": [174, 205], "speaker_range": [174, 177]},
+    {"range": [220, 244], "speaker_range": [220, 222]},
+    {"range": [258, 343], "speaker_range": [258, 260]}
+  ],
+  "member_lists": [[41, 102], [150, 159]],
+  "narrative": []
+}
